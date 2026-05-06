@@ -1,0 +1,24 @@
+# Data
+*.bam
+*.sam
+*.vcf
+*.bed
+*.fasta
+*.fa
+*.fastq
+*.fq
+*.fastq.gz
+*.tar.gz
+*.zip
+*.rds 
+*_fastqc.html
+
+# Logs
+**/logs/
+*.log
+slurm-*
+
+# R
+*.RData
+*.rds
+.Rproj.user/
