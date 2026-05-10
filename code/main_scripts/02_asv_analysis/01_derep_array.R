@@ -3,41 +3,70 @@
 suppressPackageStartupMessages({
   library(dada2)
   library(ShortRead)
+  library(ggplot2)
 })
 
-# Get paths and array task ID (1-based)
-input_dir <- Sys.getenv("INPUT_DIR")
-out_dir <- Sys.getenv("OUT_DIR")
-task_id <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
+input_dir <- Sys.getenv("INPUT_SUBDIR")
+sample_name <- Sys.getenv("SAMPLE_NAME")
+out_dir <- Sys.getenv("OUT_SUBDIR")
+n_threads <- as.integer(Sys.getenv("SLURM_CPUS_PER_TASK", "1"))
 
-cat("Task ID:", task_id, "\n")
-cat("Data path:", input_dir, "\n")
+cat("Sample:", sample_name, "\n")
+cat("Input path:", input_dir, "\n")
 cat("Output path:", out_dir, "\n")
 
-# Find all fastq files (1-based indexing)
-filtF <- sort(list.files(input_dir, pattern="_F_trunc.fastq.gz$", full.names = TRUE))
-filtR <- sort(list.files(input_dir, pattern="_R_trunc.fastq.gz$", full.names = TRUE))
-
-if(task_id > length(filtF)) {
-  cat("Task", task_id, "exceeds available samples:", length(filtF), "\n")
-  q("no")
+if (input_dir == "" || sample_name == "" || out_dir == "") {
+  stop("SAMPLE_NAME, INPUT_SUBDIR, and/or OUT_SUBDIR not set")
 }
 
-# Select single pair for this task
-filtFs <- filtF[task_id]
-filtRs <- filtR[task_id]
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
-sampleName <- sapply(strsplit(basename(filtFs), "_"), `[`, 1)
-cat(sprintf("Processing sample %d/%d: %s\n", task_id, length(filtF), sampleName))
+# Find all fastq files for this sample directory
+filtFs <- sort(list.files(input_dir, pattern = "_F_trunc.fastq.gz$", full.names = TRUE))
+filtRs <- sort(list.files(input_dir, pattern = "_R_trunc.fastq.gz$", full.names = TRUE))
 
-# input paths
-filt_path <- file.path(out_dir)
-filtF <- file.path(filt_path, paste0(sampleName, "_F_trunc.fastq.gz"))
-filtR <- file.path(filt_path, paste0(sampleName, "_R_trunc.fastq.gz"))
+cat("Found", length(filtFs), "forward and", length(filtRs), "reverse files\n")
 
-derepFs <- derepFastq(filtF, verbose=TRUE)
-derepRs <- derepFastq(filtR, verbose=TRUE) 
-names(derepFs) <- sampleName
-names(derepRs) <- sampleName
+if (length(filtFs) == 0 || length(filtRs) == 0) {
+  stop("No matching files found")
+}
 
- 
+if (length(filtFs) != length(filtRs)) {
+  stop("Forward/reverse file counts do not match")
+}
+
+sampleNames <- sub("_F_trunc.fastq.gz$", "", basename(filtFs))
+names(filtFs) <- sampleNames
+names(filtRs) <- sampleNames
+
+# Process ALL files in this directory (one SLURM task = one directory)
+for (i in seq_along(filtFs)) {
+  curr_name <- sampleNames[i]
+  cat(sprintf("Processing %d/%d: %s\n", i, length(filtFs), curr_name))
+  
+  derepFs <- derepFastq(filtFs[i], verbose = TRUE)
+  derepRs <- derepFastq(filtRs[i], verbose = TRUE)
+  names(derepFs) <- curr_name
+  names(derepRs) <- curr_name
+  
+  # Save dereplicated objects
+  saveRDS(derepFs, file.path(out_dir, paste0("derepF_", sample_name, ".rds")))
+  saveRDS(derepRs, file.path(out_dir, paste0("derepR_", sample_name, ".rds")))
+
+
+  errF <- learnErrors(list(derepFs), randomize=TRUE, multithread = n_threads, verbose = TRUE)
+  errR <- learnErrors(list(derepRs), randomize=TRUE, multithread = n_threads, verbose = TRUE)
+  
+  errF_plot <- plotErrors(errF, nominalQ = TRUE)
+  errR_plot <- plotErrors(errR, nominalQ = TRUE)
+  
+  ggsave(file.path(out_dir, paste0("learnErrors_F_", sample_name, ".png")), 
+         errF_plot, width = 10, height = 8, dpi = 300)
+  ggsave(file.path(out_dir, paste0("learnErrors_R_", sample_name, ".png")), 
+         errR_plot, width = 10, height = 8, dpi = 300)
+  
+  saveRDS(errF, file.path(out_dir, paste0("errF_", sample_name, ".rds")))
+  saveRDS(errR, file.path(out_dir, paste0("errR_", sample_name, ".rds")))
+}
+
+cat(sprintf("%s directory complete (%d pairs)\n", sample_name, length(filtFs)))

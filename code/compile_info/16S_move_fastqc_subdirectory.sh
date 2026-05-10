@@ -12,8 +12,8 @@ for f in *_fastqc.{html,zip}; do
         mv "$f" "${i}/"
         echo "Moved $f → ${i}/"
     else
-        echo "No Individual for $f"
-    fi
+       echo "No Individual for $f (SampleId: $s)"
+   fi
 done
 ##
 
@@ -32,3 +32,19 @@ for f in *_fastqc.{html,zip}; do
 done
 ##
 for d in */; do mv "$d" "${d%/}_fastqc"; done 
+
+
+
+
+for f in *trunc.fastq.gz; do 
+    [ -f "$f" ] || continue
+    s=$(echo "$f" | sed 's/_.*//; s/-16S$//')
+    i=$(awk -F'\\s+' -v s="$s" 'NR>1&&$1~("^'"$s"'"){print $3;exit}' /home5/sctoth/projects/dog_skin_microbiomes/data/metadata/CH-All_16S_Metadata_20220124.tsv)
+    if [[ -n "$i" ]]; then
+        mkdir -p "$i"  # Create folder if missing
+        mv "$f" "${i}/"
+        echo "Moved $f → ${i}/"
+    else
+       echo "No Individual for $f (SampleId: $s)"
+    fi
+done
