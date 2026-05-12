@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=16S_derep_learnerrors
-#SBATCH --array=1-1
+#SBATCH --array=1-22%10
 #SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis/derep_learnerrors/derep_%A_%a.out
 #SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis/derep_learnerrors/derep_%A_%a.err
 #SBATCH --mem=8G

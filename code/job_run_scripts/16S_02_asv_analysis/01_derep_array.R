@@ -25,6 +25,7 @@ dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 filtFs <- sort(list.files(input_dir, pattern = "_F_trunc.fastq.gz$", full.names = TRUE))
 filtRs <- sort(list.files(input_dir, pattern = "_R_trunc.fastq.gz$", full.names = TRUE))
 
+
 cat("Found", length(filtFs), "forward and", length(filtRs), "reverse files\n")
 
 if (length(filtFs) == 0 || length(filtRs) == 0) {
@@ -50,23 +51,9 @@ for (i in seq_along(filtFs)) {
   names(derepRs) <- curr_name
   
   # Save dereplicated objects
-  saveRDS(derepFs, file.path(out_dir, paste0("derepF_", sample_name, ".rds")))
-  saveRDS(derepRs, file.path(out_dir, paste0("derepR_", sample_name, ".rds")))
-
-
-  errF <- learnErrors(list(derepFs), randomize=TRUE, multithread = n_threads, verbose = TRUE)
-  errR <- learnErrors(list(derepRs), randomize=TRUE, multithread = n_threads, verbose = TRUE)
+  saveRDS(derepFs, file.path(out_dir, paste0("derepF_", curr_name, ".rds")))
+  saveRDS(derepRs, file.path(out_dir, paste0("derepR_", curr_name, ".rds")))
   
-  errF_plot <- plotErrors(errF, nominalQ = TRUE)
-  errR_plot <- plotErrors(errR, nominalQ = TRUE)
-  
-  ggsave(file.path(out_dir, paste0("learnErrors_F_", sample_name, ".png")), 
-         errF_plot, width = 10, height = 8, dpi = 300)
-  ggsave(file.path(out_dir, paste0("learnErrors_R_", sample_name, ".png")), 
-         errR_plot, width = 10, height = 8, dpi = 300)
-  
-  saveRDS(errF, file.path(out_dir, paste0("errF_", sample_name, ".rds")))
-  saveRDS(errR, file.path(out_dir, paste0("errR_", sample_name, ".rds")))
 }
 
-cat(sprintf("%s directory complete (%d pairs)\n", sample_name, length(filtFs)))
+cat(sprintf("%s directory complete (%d pairs)\n", curr_name, length(filtFs)))
