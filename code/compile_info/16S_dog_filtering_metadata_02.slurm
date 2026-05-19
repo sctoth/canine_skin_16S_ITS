@@ -41,26 +41,17 @@ for proc_txt in "$TRUNC_DIR"/{CH,Chlor,Kit}*_multiqc_report_data/multiqc_fastqc.
 
     function normalize_sample(sample_full, s) {
     s = sample_full
-    # 1. Handle the _F and _R suffixes (order matters)
-    sub(/_[FR]$/, "", s)
-    sub(/16S_[FR]$/, "", s)
+    # 1. Strip all common sequencing/pipeline suffixes
+    # This catches 16S, 16SF, 16SR, _F, _R, _filt, _trunc, etc.
+    gsub(/(16S[FR]?|_S[0-9]+_L[0-9]+_R[12]_[0-9]+|_filt|_trunc|_[FR]|16S$)/, "", s)
     
-    # 2. Standardize the 16S suffix
-    sub(/16S$/, "", s)
-    sub(/-16S$/, "", s)
-    
-    # 3. Handle specific suffixes found in filenames
-    sub(/_S[0-9]+_L[0-9]+_R[12]_[0-9]+$/, "", s)
-    sub(/_filt$/, "", s)
-    sub(/_trunc$/, "", s)
-    
-    # 4. Remove dog prefixes and D0
+    # 2. Strip Project Prefixes and D0
     sub(/^CH0*/, "", s)
     sub(/D0/, "", s)
     
-    # 5. Final cleanup
-    gsub(/-/, "", s)
-    gsub(/_/, "", s) # Added to catch lingering underscores before IDs
+    # 3. Final Cleanup: remove all dashes and underscores
+    gsub(/[-_]/, "", s)
+    
     return s
 }
 
