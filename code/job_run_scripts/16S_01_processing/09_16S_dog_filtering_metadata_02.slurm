@@ -10,9 +10,9 @@ set -euo pipefail
 BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data"
 RAW_DIR="$BASE_DIR/raw/CH_All_16S/CH_All_16S_multiqc"
 TRIMMED_DIR="$BASE_DIR/processed/CH_All_16S/01_trimleft_output/trimleft_multiqc_output"
-TRUNC_DIR="$BASE_DIR/processed/CH_All_16S/03_trunc_output/trunc_multiqc_output"
+TRUNC_DIR="$BASE_DIR/processed/CH_All_16S/04_trunc_output/trunc_multiqc_output"
 METADATA="$BASE_DIR/metadata/CH-All_16S_Metadata_20220124.tsv"
-OUT_DIR="$BASE_DIR/processed/CH_All_16S/summary_read_counts_04"
+OUT_DIR="$BASE_DIR/processed/CH_All_16S/04_trunc_output/04_summary_read_counts"
 
 mkdir -p "$OUT_DIR"
 

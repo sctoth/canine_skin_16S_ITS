@@ -33,11 +33,11 @@ png(file.path(out_dir, "rev_quality_profile.png"), width=12, height=8, units="in
 print(plotQualityProfile(fnRs[1:min(3,length(fnRs))]))
 dev.off()
 
-#png(file.path(out_dir, "fwd_quality_all.png"), width=12, height=8, units="in", res=300)
-#print(plotQualityProfile(fnFs, aggregate=TRUE))
-#dev.off()
+png(file.path(out_dir, "fwd_quality_all.png"), width=12, height=8, units="in", res=300)
+print(plotQualityProfile(fnFs, aggregate=TRUE))
+dev.off()
 
-#png(file.path(out_dir, "rev_quality_all.png"), width=12, height=8, units="in", res=300)
-#print(plotQualityProfile(fnRs, aggregate=TRUE))
-#dev.off()
+png(file.path(out_dir, "rev_quality_all.png"), width=12, height=8, units="in", res=300)
+print(plotQualityProfile(fnRs, aggregate=TRUE))
+dev.off()
  

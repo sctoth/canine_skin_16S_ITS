@@ -11,7 +11,7 @@
 module load fastqc/0.11.9
 
 DATA_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/raw/CH_All_16S"
-OUTPUT_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S_fastqc"
+OUTPUT_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S_fastqc_02"
 
 mkdir -p ${OUTPUT_DIR}
 cd ${DATA_DIR}

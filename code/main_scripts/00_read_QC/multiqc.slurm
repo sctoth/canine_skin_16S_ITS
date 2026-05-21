@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=multiqc_16S_per_dog
-#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/CH_All_16S_multiqc_logs/multiqc_%A_%a.out
-#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/CH_All_16S_multiqc_logs/multiqc_%A_%a.err
+#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/code/compile_info/logs/multiqc_%A_%a.out
+#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/code/compile_info/logs/multiqc_%A_%a.err
 #SBATCH --mem=4G
 #SBATCH --cpus-per-task=4
 #SBATCH --array=1-22%10
@@ -10,9 +10,10 @@ source /home5/sctoth/miniconda3/etc/profile.d/conda.sh
 conda activate multiqc
 
 # Directory paths
-DATA_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S_fastqc"
-OUTPUT_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S_multiqc"
-
+#DATA_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S_fastqc"
+DATA_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/02_trunc_output/trunc_fastqc_output_02"
+#OUTPUT_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S_multiqc"
+OUTPUT_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/02_trunc_output/trunc_multiqc_output_02"
 mkdir -p "${OUTPUT_DIR}"
 
 cd "${DATA_DIR}"
