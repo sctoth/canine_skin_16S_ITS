@@ -13,7 +13,7 @@ set -euo pipefail
 
 # Paths
 BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data"
-DADA2_DIR="${BASE_DIR}/dada2_analysis_02/CH_All_16S/Seq_Runs_Summary" 
+DADA2_DIR="${BASE_DIR}/dada2_analysis_03/CH_All_16S/Seq_Runs_Summary" 
 
 # Activate environment
 source /home5/sctoth/miniconda3/etc/profile.d/conda.sh

@@ -7,18 +7,18 @@ suppressPackageStartupMessages({
 })
 
 # Get paths
-out_dir2  <- Sys.getenv("DADA2_DIR")
+base_dir  <- Sys.getenv("SEQ_RUN_SUMMARY_DIR")
 n_threads <- as.integer(Sys.getenv("SLURM_CPUS_PER_TASK", "1"))
 
 
-cat("Dada2 output path:", out_dir2, "\n")
+cat("Dada2 output path:", base_dir, "\n")
 
 # Track start time
 job_start_time <- Sys.time()
 cat("Start time:", format(job_start_time, "%Y-%m-%d %H:%M:%S"), "\n\n")
 
 # 1. Read the CSV file
-seqtabAll_dt <- fread(file.path(out_dir2, "canine_skin_microbiome_all_asvs_seqruns.csv"))
+seqtabAll_dt <- fread(file.path(base_dir, "canine_skin_microbiome_all_asvs_seqruns.csv"))
 
 # 2. Convert to a standard matrix (assuming the first column contains row names/sample IDs)
 seqtabAll_mat <- as.matrix(seqtabAll_dt[, -1, with = FALSE])
@@ -31,12 +31,12 @@ class(seqtabAll_mat) <- "integer"
 seqtabNoC <- removeBimeraDenovo(seqtabAll_mat, multithread=n_threads)
 
 # Save results
-saveRDS(seqtabNoC, file.path(out_dir2, "canine_skin_microbiome_filtered_nochim_asvs_pseudo.rds"))
-seqtabNoC <- readRDS(file.path(out_dir2, "canine_skin_microbiome_filtered_nochim_asvs_pseudo.rds"))
-write.csv(seqtabNoC, file.path(out_dir2, "canine_skin_microbiome_filtered_nochim_asvs_pseudo.csv"))
+saveRDS(seqtabNoC, file.path(base_dir, "canine_skin_microbiome_filtered_nochim_asvs.rds"))
+seqtabNoC <- readRDS(file.path(base_dir, "canine_skin_microbiome_filtered_nochim_asvs.rds"))
+write.csv(seqtabNoC, file.path(base_dir, "canine_skin_microbiome_filtered_nochim_asvs.csv"))
 
 # Final summary
-cat("=== ASV TABLE SUMMARY ===\n")
+cat("=== CHIMERA-REMOVAL ASV TABLE SUMMARY ===\n")
 cat("Samples:", ncol(seqtabNoC), "\n")
 cat("ASVs:", nrow(seqtabNoC), "\n")
 cat("Total reads:", sum(seqtabNoC), "\n")
