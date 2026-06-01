@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Define paths
-KIT_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/04_trunc_output/Kit"
-CHLOR_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/04_trunc_output/Chlor"
-RUN1_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/04_trunc_output/Seq_Run1"
-RUN2_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/04_trunc_output/Seq_Run2"
-RUN3_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/04_trunc_output/Seq_Run3"
-RUN4_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/04_trunc_output/Seq_Run4"
+KIT_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/05_truncR175_maxEE2-5_output/Kit"
+CHLOR_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/05_truncR175_maxEE2-5_output/Chlor"
+RUN1_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/05_truncR175_maxEE2-5_output/Seq_Run1"
+RUN2_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/05_truncR175_maxEE2-5_output/Seq_Run2"
+RUN3_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/05_truncR175_maxEE2-5_output/Seq_Run3"
+RUN4_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/05_truncR175_maxEE2-5_output/Seq_Run4"
 
 
 # Ensure target directories exist
@@ -15,7 +15,7 @@ mkdir -p "$RUN2_DIR"
 mkdir -p "$RUN3_DIR"
 mkdir -p "$RUN4_DIR"
 
-cd "/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/04_trunc_output" 
+cd "/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/05_truncR175_maxEE2-5_output" 
 
 mv "CH001" "Seq_Run1"
 mv "CH003" "Seq_Run2"

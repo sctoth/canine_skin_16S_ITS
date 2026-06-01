@@ -10,7 +10,7 @@ set -euo pipefail
 
 # Paths
 BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S"
-DATA_DIR="${BASE_DIR}/04_trunc_output"
+DATA_DIR="${BASE_DIR}/05_truncR175_maxEE2-5_output"
 OUT_DIR="${DATA_DIR}/read_quality_results" 
 
 mkdir -p "${OUT_DIR}"

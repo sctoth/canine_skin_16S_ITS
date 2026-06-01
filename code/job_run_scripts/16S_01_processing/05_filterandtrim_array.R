@@ -37,7 +37,7 @@ filtR <- file.path(filt_path, paste0(sampleName, "_R_trunc.fastq.gz"))
 
 # Filter and trim pairs
 out <- filterAndTrim(fnFs, filtF, fnRs, filtR, 
-                     truncLen=c(200, 150), maxN=0, maxEE=c(2,5), 
+                     truncLen=c(200, 150), maxN=0, maxEE=c(2,2), 
                      truncQ=2, rm.phix=TRUE, compress=TRUE, 
                      multithread=TRUE, verbose=TRUE)
 

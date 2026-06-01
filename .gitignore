@@ -22,3 +22,6 @@ slurm-*
 *.RData
 *.rds
 .Rproj.user/
+
+# directories
+data/

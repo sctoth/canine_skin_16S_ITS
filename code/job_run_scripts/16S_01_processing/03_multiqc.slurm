@@ -10,8 +10,10 @@ source /home5/sctoth/miniconda3/etc/profile.d/conda.sh
 conda activate multiqc
 
 # Directory paths
-DATA_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed_02/CH_All_16S/trimleft_output_02/trimleft_fastqc_output"
-OUTPUT_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed_02/CH_All_16S/trimleft_output_02/trimleft_multiqc_output"
+#DATA_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/01_trimleft_output/trimleft_fastqc_output"
+#OUTPUT_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S/01_trimleft_output/trimleft_multiqc_output"
+DATA_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/raw/CH_All_16S/CH_All_16S_fastqc"
+OUTPUT_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/raw/CH_All_16S/CH_All_16S_multiqc"
 
 
 mkdir -p "${OUTPUT_DIR}"

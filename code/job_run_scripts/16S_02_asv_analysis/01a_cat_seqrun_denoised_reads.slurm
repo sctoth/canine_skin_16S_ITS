@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=16S_cat_seqrun_ASV_tables
-#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_04/16S_cat_seqrun_ASV_tables%A.out
-#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_04/16S_cat_seqrun_ASV_tables%A.err
+#SBATCH --job-name=16S_cat_seqrun_denoised_reads
+#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_03/16S_cat_seqrun_denoised_reads%A.out
+#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_03/16S_cat_seqrun_denoised_reads%A.err
 #SBATCH --mem=8G
 #SBATCH --cpus-per-task=4
 #SBATCH --time=48:00:00
@@ -24,4 +24,4 @@ conda activate /home5/sctoth/miniconda3/envs/r_env
 # Export vars
 export  BASE_DIR SEQRUN_SUMMARY
 # Run Rscript with array ID
-/home5/sctoth/miniconda3/envs/r_env/bin/Rscript /home5/sctoth/projects/dog_skin_microbiomes/code/job_run_scripts/16S_02_asv_analysis/01b_cat_seqrun_ASV_tables.R
+/home5/sctoth/miniconda3/envs/r_env/bin/Rscript /home5/sctoth/projects/dog_skin_microbiomes/code/job_run_scripts/16S_02_asv_analysis/01b_cat_seqrun_denoised_reads.R

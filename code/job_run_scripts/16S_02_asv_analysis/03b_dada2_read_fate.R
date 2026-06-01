@@ -50,7 +50,7 @@ fwrite(sample_totals, file.path(base_dir, "canine_skin_microbiome_all_asvs_seqru
 cat("4. Complete: canine_skin_microbiome_all_asvs_seqruns_sample_totals.csv") 
 
 # Load the sequence mapping and the filtered ASV table
-filtered_df <- fread(file.path(base_dir, "canine_skin_microbiome_filtered_nochim_asvs_seqruns.csv"))
+filtered_df <- fread(file.path(base_dir, "canine_skin_microbiome_filtered_nochim_asvs.csv"))
 
 # 1. Create a named vector: names are sequences, values are ASV IDs
 seq_to_asv_id <- asv_map$asv_id

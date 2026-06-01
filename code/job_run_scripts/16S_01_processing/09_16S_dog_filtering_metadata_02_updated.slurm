@@ -12,7 +12,7 @@ RAW_DIR="$BASE_DIR/raw/CH_All_16S/CH_All_16S_multiqc"
 TRIMMED_DIR="$BASE_DIR/processed/CH_All_16S/01_trimleft_output/trimleft_multiqc_output"
 TRUNC_DIR="$BASE_DIR/processed/CH_All_16S/05_truncR175_maxEE2-5_output/trunc_multiqc_output"
 METADATA="$BASE_DIR/metadata/CH-All_16S_Metadata_20220124.tsv"
-OUT_DIR="$BASE_DIR/processed/CH_All_16S/05_truncR175_maxEE2-5_output/04_summary_read_counts"
+OUT_DIR="$BASE_DIR/processed/CH_All_16S/05_truncR175_maxEE2-5_output/04_summary_read_counts_02"
 
 mkdir -p "$OUT_DIR"
 
@@ -73,7 +73,9 @@ for proc_txt in "$TRUNC_DIR"/{CH,Chlor,Kit}*_multiqc_report_data/multiqc_fastqc.
             total = cols[local_total_col] + 0
             
             # This sums R1 and R2 together into the same sample_id key
-            arr[sample_id] += total
+            if (!(sample_id in arr)) {
+            arr[sample_id] = total
+            }
             seen_arr[sample_id] = 1
         }
         close(file)

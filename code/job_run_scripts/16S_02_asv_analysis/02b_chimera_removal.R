@@ -11,7 +11,6 @@ base_dir  <- Sys.getenv("SEQ_RUN_SUMMARY_DIR")
 n_threads <- as.integer(Sys.getenv("SLURM_CPUS_PER_TASK", "1"))
 
 
-cat("Dada2 output path:", base_dir, "\n")
 
 # Track start time
 job_start_time <- Sys.time()
