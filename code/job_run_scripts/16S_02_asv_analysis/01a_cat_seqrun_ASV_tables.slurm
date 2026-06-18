@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=16S_cat_seqrun_ASV_tables
-#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_04/16S_cat_seqrun_ASV_tables%A.out
-#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_04/16S_cat_seqrun_ASV_tables%A.err
+#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_final/16S_cat_seqrun_ASV_tables%A.out
+#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_final/16S_cat_seqrun_ASV_tables%A.err
 #SBATCH --mem=8G
 #SBATCH --cpus-per-task=4
 #SBATCH --time=48:00:00
@@ -12,7 +12,7 @@ set -euo pipefail
 
 
 # Paths
-BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/dada2_analysis_04/CH_All_16S"
+BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/dada2_analysis_final/CH_All_16S"
 SEQRUN_SUMMARY="${BASE_DIR}/Seq_Runs_Summary" 
 mkdir -p ${SEQRUN_SUMMARY}
 

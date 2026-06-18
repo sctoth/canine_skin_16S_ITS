@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=16S_chimera_removal_pseudo
-#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_04/16S_chimera_removal_pseudo_dada2%A.out
-#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_04/16S_chimera_removal_pseudo_dada2%A.err
+#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_final/16S_chimera_removal_pseudo_dada2%A.out
+#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_final/16S_chimera_removal_pseudo_dada2%A.err
 #SBATCH --mem=32G
 #SBATCH --cpus-per-task=16
 #SBATCH --time=48:00:00
@@ -13,7 +13,7 @@ set -euo pipefail
 
 # Paths
 BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data"
-SEQ_RUN_SUMMARY_DIR="${BASE_DIR}/dada2_analysis_04/CH_All_16S/Seq_Runs_Summary" 
+SEQ_RUN_SUMMARY_DIR="${BASE_DIR}/dada2_analysis_final/CH_All_16S/Seq_Runs_Summary" 
 
 # Activate environment
 source /home5/sctoth/miniconda3/etc/profile.d/conda.sh

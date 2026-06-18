@@ -91,10 +91,10 @@ start_time <- Sys.time()
 cat("Denoise start time:", format(start_time, "%Y-%m-%d %H:%M:%S"), "\n")
 
 cat("Denoising forward reads.\n")
-dadaFs <- dada(derepFs, err=errF, pool="pseudo", multithread=n_threads)
+dadaFs <- dada(derepFs, err=errF, pool=TRUE, multithread=n_threads)
 
 cat("Denoising reverse reads.\n")
-dadaRs <- dada(derepRs, err=errR, pool="pseudo", multithread=n_threads)
+dadaRs <- dada(derepRs, err=errR, pool=TRUE, multithread=n_threads)
 
 cat("Saving rds files of dadaR and dadaF objects.\n")
 saveRDS(dadaFs, file.path(out_dir2, "dadaFs_canine_skin_microbiome.rds"))

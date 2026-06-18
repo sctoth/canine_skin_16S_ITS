@@ -13,8 +13,8 @@ cat("Data path:", miseq_path, "\n")
 cat("Output path:", out_dir, "\n")
 
 # Find fastq files
-fnFs <- sort(list.files(miseq_path, pattern="_F_trunc.fastq.gz$", full.names = TRUE))
-fnRs <- sort(list.files(miseq_path, pattern="_R_trunc.fastq.gz$", full.names = TRUE))
+fnFs <- sort(list.files(miseq_path, pattern="_F_trunc.fastq.gz$", full.names = TRUE, recursive = TRUE))
+fnRs <- sort(list.files(miseq_path, pattern="_R_trunc.fastq.gz$", full.names = TRUE, recursive = TRUE))
 
 if(length(fnFs) == 0) stop("No forward reads found!")
 if(length(fnRs) == 0) stop("No reverse reads found!")

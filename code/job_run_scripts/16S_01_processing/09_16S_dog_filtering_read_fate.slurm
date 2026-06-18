@@ -2,17 +2,17 @@
 #SBATCH --job-name=read_counts_summary
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=4G
-#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_processing_04/raw_trim_trunc_summary/dog_seq_metadata_%j.out
-#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_processing_04/raw_trim_trunc_summary/dog_seq_metadata_%j.err
+#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_processing_final/raw_trim_trunc_summary/dog_seq_metadata_%j.out
+#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_processing_final/raw_trim_trunc_summary/dog_seq_metadata_%j.err
 
 set -euo pipefail
 
 BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data"
 RAW_DIR="$BASE_DIR/raw/CH_All_16S/CH_All_16S_multiqc"
 TRIMMED_DIR="$BASE_DIR/processed/CH_All_16S/01_trimleft_output/trimleft_multiqc_output"
-TRUNC_DIR="$BASE_DIR/processed/CH_All_16S/05_truncR175_maxEE2-5_output/trunc_multiqc_output"
+TRUNC_DIR="$BASE_DIR/processed/CH_All_16S/06_truncR150_maxEE22_output/trunc_multiqc_output"
 METADATA="$BASE_DIR/metadata/CH-All_16S_Metadata_20220124.tsv"
-OUT_DIR="$BASE_DIR/processed/CH_All_16S/05_truncR175_maxEE2-5_output/04_summary_read_counts_02"
+OUT_DIR="$BASE_DIR/processed/CH_All_16S/06_truncR150_maxEE22_output/summary_read_counts"
 
 mkdir -p "$OUT_DIR"
 
@@ -71,8 +71,12 @@ for proc_txt in "$TRUNC_DIR"/{CH,Chlor,Kit}*_multiqc_report_data/multiqc_fastqc.
             sample_full = cols[local_sample_col]
             sample_id = normalize_sample(sample_full)
             total = cols[local_total_col] + 0
-            
+
             # This sums R1 and R2 together into the same sample_id key
+            # arr[sample_id] += total
+            # seen_arr[sample_id] = 1
+            
+            # This keeps only the read count from forward reads (not sum of R1 and R2)
             if (!(sample_id in arr)) {
             arr[sample_id] = total
             }

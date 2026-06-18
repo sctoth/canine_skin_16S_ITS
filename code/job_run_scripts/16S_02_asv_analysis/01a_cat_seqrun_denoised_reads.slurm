@@ -12,7 +12,7 @@ set -euo pipefail
 
 
 # Paths
-BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/dada2_analysis_04/CH_All_16S"
+BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/dada2_analysis_final/CH_All_16S"
 SEQRUN_SUMMARY="${BASE_DIR}/Seq_Runs_Summary" 
 mkdir -p ${SEQRUN_SUMMARY}
 

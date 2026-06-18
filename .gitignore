@@ -25,3 +25,4 @@ slurm-*
 
 # directories
 data/
+database/

@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=16S_trimmed_fastqc
-#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_processing_04/trunc_fastqc/fastqc_%A_%a.out
-#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_processing_04/trunc_fastqc/fastqc_%A_%a.err
+#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_processing_final/trunc_fastqc/fastqc_%A_%a.out
+#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_processing_final/trunc_fastqc/fastqc_%A_%a.err
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=10G
 #SBATCH --array=1-992%20
@@ -9,7 +9,7 @@
 module load fastqc/0.11.9
 
 BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data/processed/CH_All_16S"
-DATA_DIR="${BASE_DIR}/05_truncR175_maxEE2-5_output"
+DATA_DIR="${BASE_DIR}/06_truncR150_maxEE22_output"
 OUTPUT_DIR="${DATA_DIR}/trunc_fastqc_output"
 
 mkdir -p ${OUTPUT_DIR}

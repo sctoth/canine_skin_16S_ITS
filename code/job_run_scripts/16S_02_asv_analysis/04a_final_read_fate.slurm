@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=16S_create_read_fate_table
-#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_04/16S_dada2_read_fate_final_table_%A.out
-#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_04/16S_dada2_read_fate_final_table_%A.err
+#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_final/16S_dada2_read_fate_final_table_%A.out
+#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/16S_dada2_analysis_final/16S_dada2_read_fate_final_table_%A.err
 #SBATCH --mem=8G
 #SBATCH --cpus-per-task=4
 #SBATCH --time=48:00:00
@@ -14,8 +14,8 @@ set -euo pipefail
 # Paths
 BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data"
 META_DIR="${BASE_DIR}/metadata"
-SEQ_RUN_SUMMARY_DIR="${BASE_DIR}/dada2_analysis_04/CH_All_16S/Seq_Runs_Summary" 
-FILT_READS="${BASE_DIR}/processed/CH_All_16S/05_truncR175_maxEE2-5_output/04_summary_read_counts_02"
+SEQ_RUN_SUMMARY_DIR="${BASE_DIR}/dada2_analysis_final/CH_All_16S/Seq_Runs_Summary" 
+FILT_READS="${BASE_DIR}/processed/CH_All_16S/06_truncR150_maxEE22_output/summary_read_counts"
 # Activate environment
 source /home5/sctoth/miniconda3/etc/profile.d/conda.sh
 conda activate /home5/sctoth/miniconda3/envs/r_env
