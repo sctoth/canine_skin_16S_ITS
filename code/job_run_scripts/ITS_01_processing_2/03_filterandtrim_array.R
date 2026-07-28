@@ -14,9 +14,9 @@ cat("Task ID:", task_id, "\n")
 cat("Data path:", miseq_path, "\n")
 cat("Output path:", out_dir, "\n")
 
-# Find all fastq files (1-based indexing)
-fnFs_all <- sort(list.files(miseq_path, pattern="_F_trimmed.fastq.gz$", full.names = TRUE))
-fnRs_all <- sort(list.files(miseq_path, pattern="_R_trimmed.fastq.gz$", full.names = TRUE))
+# Find all fastq files  
+fnFs_all <- sort(list.files(miseq_path, pattern="_1.fastq.gz$", full.names = TRUE))
+fnRs_all <- sort(list.files(miseq_path, pattern="_2.fastq.gz$", full.names = TRUE))
 
 if(task_id > length(fnFs_all)) {
   cat("Task", task_id, "exceeds available samples:", length(fnFs_all), "\n")
@@ -32,17 +32,14 @@ cat(sprintf("Processing sample %d/%d: %s\n", task_id, length(fnFs_all), sampleNa
 
 # Output paths
 filt_path <- file.path(out_dir)
-filtF <- file.path(filt_path, paste0(sampleName, "_F_trunc.fastq.gz"))
-filtR <- file.path(filt_path, paste0(sampleName, "_R_trunc.fastq.gz"))
+filtF <- file.path(filt_path, paste0(sampleName, "_1_filtered.fastq.gz"))
+filtR <- file.path(filt_path, paste0(sampleName, "_2_filtered.fastq.gz"))
 
 # Filter and trim pairs
-out <- filterAndTrim(fnFs, filtF, fnRs, filtR, 
-                     truncLen=c(200, 150), maxN=0, maxEE=c(2,2), 
-                     truncQ=2, rm.phix=TRUE, compress=TRUE, 
-                     multithread=TRUE, verbose=TRUE)
+out <-  filterAndTrim(fnFs, filtF, fnRs, filtR, maxN = 0, maxEE = c(2, 2), truncQ = 2,
+    minLen = 50, rm.phix = TRUE, compress = TRUE, multithread = TRUE) 
 
 cat("Results for", sampleName, ":\n")
 print(out)
 
-# Save individual stats
-saveRDS(out, file.path(out_dir, sprintf("stats_%s.rds", sampleName)))
+ 

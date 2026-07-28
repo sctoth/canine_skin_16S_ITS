@@ -13,8 +13,8 @@ cat("Data path:", miseq_path, "\n")
 cat("Output path:", out_dir, "\n")
 
 # Find fastq files
-fnFs <- sort(list.files(miseq_path, pattern="_F_trunc.fastq.gz$", full.names = TRUE, recursive = TRUE))
-fnRs <- sort(list.files(miseq_path, pattern="_R_trunc.fastq.gz$", full.names = TRUE, recursive = TRUE))
+fnFs <- sort(list.files(miseq_path, pattern="_1_filtered.fastq.gz$", full.names = TRUE))
+fnRs <- sort(list.files(miseq_path, pattern="_2_filtered.fastq.gz$", full.names = TRUE))
 
 if(length(fnFs) == 0) stop("No forward reads found!")
 if(length(fnRs) == 0) stop("No reverse reads found!")
@@ -33,11 +33,11 @@ png(file.path(out_dir, "rev_quality_profile.png"), width=12, height=8, units="in
 print(plotQualityProfile(fnRs[1:min(3,length(fnRs))]))
 dev.off()
 
-png(file.path(out_dir, "fwd_quality_all.png"), width=12, height=8, units="in", res=300)
-print(plotQualityProfile(fnFs, aggregate=TRUE))
-dev.off()
+#png(file.path(out_dir, "fwd_quality_all.png"), width=12, height=8, units="in", res=300)
+#print(plotQualityProfile(fnFs, aggregate=TRUE))
+#dev.off()
 
-png(file.path(out_dir, "rev_quality_all.png"), width=12, height=8, units="in", res=300)
-print(plotQualityProfile(fnRs, aggregate=TRUE))
-dev.off()
+#png(file.path(out_dir, "rev_quality_all.png"), width=12, height=8, units="in", res=300)
+#print(plotQualityProfile(fnRs, aggregate=TRUE))
+#dev.off()
  

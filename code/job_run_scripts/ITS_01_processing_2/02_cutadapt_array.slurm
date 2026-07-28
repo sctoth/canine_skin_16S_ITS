@@ -1,12 +1,14 @@
 #!/bin/bash
-#SBATCH --job-name=ITS_remove_Ns
+#SBATCH --job-name=ITS_remove_primers
 #SBATCH --array=1-496%20
-#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/ITS_processing_updated/trimming/remove_Ns_%A_%a.out
-#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/ITS_processing_updated/trimming/remove_Ns_%A_%a.err
+#SBATCH --output=/home5/sctoth/projects/dog_skin_microbiomes/logs/ITS_processing_updated/trimming/remove_primers_%A_%a.out
+#SBATCH --error=/home5/sctoth/projects/dog_skin_microbiomes/logs/ITS_processing_updated/trimming/remove_primers_%A_%a.err
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=10G
 
 set -euo pipefail
+
+module load cutadapt/3.1
 
 # Paths
 BASE_DIR="/home5/sctoth/projects/dog_skin_microbiomes/data"

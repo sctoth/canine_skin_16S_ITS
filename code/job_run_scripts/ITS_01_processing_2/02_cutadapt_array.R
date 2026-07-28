@@ -10,35 +10,48 @@ miseq_path <- Sys.getenv("INPUT_DIR")
 out_dir <- Sys.getenv("OUT_DIR")
 task_id <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 
+cutadapt <- "cutadapt"
+system2(cutadapt, args = "--version")  # sanity check
+
 cat("Task ID:", task_id, "\n")
 cat("Data path:", miseq_path, "\n")
 cat("Output path:", out_dir, "\n")
 
-# Find all fastq files (1-based indexing)
-fnFs_all <- sort(list.files(miseq_path, pattern="_R1_001.fastq.gz$", full.names = TRUE))
-fnRs_all <- sort(list.files(miseq_path, pattern="_R2_001.fastq.gz$", full.names = TRUE))
+task_id <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
+fnFs.filtN <- sort(list.files(miseq_path, pattern="_F_filtN.fastq.gz$", full.names = TRUE))
+fnRs.filtN <- sort(list.files(miseq_path, pattern="_R_filtN.fastq.gz$", full.names = TRUE))
+stopifnot(length(fnFs.filtN) == length(fnRs.filtN))
 
-if(task_id > length(fnFs_all)) {
-  cat("Task", task_id, "exceeds available samples:", length(fnFs_all), "\n")
-  q("no")
-}
+i <- task_id
+if (i < 1 || i > length(fnFs.filtN)) stop("task_id out of range: ", i)
 
-# Select single pair for this task
-fnFs <- fnFs_all[task_id]
-fnRs <- fnRs_all[task_id]
+fF <- fnFs.filtN[i]
+fR <- fnRs.filtN[i]
 
-sampleName <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
-cat(sprintf("Processing sample %d/%d: %s\n", task_id, length(fnFs_all), sampleName))
+FWD <- "CTTGGTCATTTAGAGGAAGTAA"   
+REV <- "GCTGCGTTCTTCATCGATGC"  
 
-# Output paths
-filt_path <- file.path(out_dir)
-filtF <- file.path(filt_path, paste0(sampleName, "_F_filtN.fastq.gz"))
-filtR <- file.path(filt_path, paste0(sampleName, "_R_filtN.fastq.gz"))
+FWD.RC <- dada2:::rc(FWD)
+REV.RC <- dada2:::rc(REV)
 
-# Filter and trim pairs
-out <- filterAndTrim(fnFs, filtF, fnRs, filtR, maxN=0, multithread=TRUE, verbose=TRUE)
+outF <- file.path(out_dir, basename(sub("_F_filtN.fastq.gz$", "_1.fastq.gz", fF)))
+outR <- file.path(out_dir, basename(sub("_R_filtN.fastq.gz$", "_2.fastq.gz", fR)))
 
-cat("Results for", sampleName, ":\n")
-print(out)
 
+# Trim FWD and the reverse-complement of REV off of R1 (forward reads)
+R1.flags <- paste("-g", FWD, "-a", REV.RC) 
+# Trim REV and the reverse-complement of FWD off of R2 (reverse reads)
+R2.flags <- paste("-G", REV, "-A", FWD.RC) 
+
+system2(
+  cutadapt,
+  args = c(
+    R1.flags, R2.flags, "-n", 2,
+    "--minimum-length", "1",
+    "-o", outF, "-p", outR,
+    fF, fR
+  )
+)
+
+ 
  
